@@ -1,0 +1,8 @@
+.env
+.vscode-profile/
+__pycache__/
+venv/
+node_modules/
+.DS_Store
+.pytest_cache/
+.python-version

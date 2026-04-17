@@ -1,0 +1,51 @@
+{
+  "nav": {
+    "brand": "Aegis Hub",
+    "home": "Home",
+    "scams": "Encyclopedia",
+    "quiz": "Quiz",
+    "report": "Report"
+  },
+  "hero": {
+    "eyebrow": "🛡️ India's Digital Safety Platform",
+    "title_line1": "Navigate the",
+    "title_highlight": "Digital Frontier",
+    "subtitle": "Real-time AI analysis to protect you from modern digital fraud — built for India.",
+    "cta": "Start Protection"
+  },
+  "sections": {
+    "scams_title": "Threat Encyclopedia",
+    "quiz_title": "Safety Certification",
+    "report_title": "Incident Reporting"
+  },
+  "scams_data": [
+    {
+      "id": "upi",
+      "title": "💳 UPI Phishing",
+      "desc": "Fake 'Request Money' links disguised as refunds or lottery wins.",
+      "action": "Analyze with AI"
+    },
+    {
+      "id": "kyc",
+      "title": "📱 KYC Scam",
+      "desc": "Urgent SMS threats to block your bank account or SIM card.",
+      "action": "Analyze with AI"
+    },
+    {
+      "id": "job",
+      "title": "💼 Job Fraud",
+      "desc": "Offers requiring 'security deposits' for remote work interviews.",
+      "action": "Analyze with AI"
+    }
+  ],
+  "aegis": {
+    "wake": "Aegis Protocol Online",
+    "greeting": "I am monitoring for threats. Paste any suspicious message below.",
+    "input_placeholder": "Ask Aegis anything...",
+    "disclaimer": "AI Guidance only. Never share passwords."
+  },
+  "common": {
+    "emergency": "📞 1930 Helpline",
+    "loading": "Hydrating 3D Aether Engine..."
+  }
+}

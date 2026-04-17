@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aegis Hub | Digital Safety</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div id="canvas-container">
+        <canvas id="three-canvas"></canvas>
+    </div>
+
+    <nav class="glass-nav">
+        <div class="brand" data-i18n="nav.brand">AEGIS HUB</div>
+        <div class="nav-links">
+            <button onclick="showView('hero')" data-i18n="nav.home">Home</button>
+            <button onclick="showView('scams')" data-i18n="nav.scams">Encyclopedia</button>
+            <button onclick="showView('quiz')" data-i18n="nav.quiz">Quiz</button>
+            <button onclick="showView('report')" data-i18n="nav.report">Report</button>
+        </div>
+    </nav>
+
+    <main id="app-shell">
+        <section id="view-hero" class="view active">
+            <div class="hero-content">
+                <p class="eyebrow" data-i18n="hero.eyebrow"></p>
+                <h1 class="glitch-text">
+                    <span data-i18n="hero.title_line1"></span><br>
+                    <span class="highlight" data-i18n="hero.title_highlight"></span>
+                </h1>
+                <p class="subtitle" data-i18n="hero.subtitle"></p>
+                <button class="cta-primary" onclick="showView('scams')" data-i18n="common.cta_main"></button>
+            </div>
+        </section>
+
+        <section id="view-scams" class="view">
+            <h2 class="view-title">Scam Encyclopedia</h2>
+            <div class="grid-layout">
+                <div class="glass-card">
+                    <div class="card-icon">💳</div>
+                    <h3>UPI Phishing</h3>
+                    <p>Fake "Request Money" links disguised as refunds.</p>
+                </div>
+                <div class="glass-card">
+                    <div class="card-icon">📱</div>
+                    <h3>KYC Scams</h3>
+                    <p>Urgent SMS threats to block your bank account.</p>
+                </div>
+                <div class="glass-card">
+                    <div class="card-icon">💼</div>
+                    <h3>Job Fraud</h3>
+                    <p>Offers requiring "security deposits" for interviews.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="view-quiz" class="view">
+            <h2 class="view-title">Safety Quiz</h2>
+            <div class="glass-card">
+                <p>System initializing... Quiz modules loading soon.</p>
+            </div>
+        </section>
+
+        <section id="view-report" class="view">
+            <h2 class="view-title">Report Cybercrime</h2>
+            <div class="glass-card">
+                <p>Connecting to National Cybercrime Portal (1930)...</p>
+            </div>
+        </section>
+    </main>
+
+    <div id="aegis-container">
+        <div id="aegis-chat" class="hidden">
+            <div class="chat-header" data-i18n="aegis.wake">AEGIS PROTOCOL</div>
+            <div id="chat-history"></div>
+            <div class="chat-input-area">
+                <input type="text" id="ai-input" placeholder="Scan message...">
+                <button id="send-ai-btn">Send</button>
+            </div>
+        </div>
+        <div id="aegis-eye" onclick="toggleAegis()">
+            <div class="pupil"></div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.0/three.min.js"></script>
+    <script type="module">
+        import './js/main.js';
+        import './js/visuals.js';
+    </script>
+</body>
+</html>
