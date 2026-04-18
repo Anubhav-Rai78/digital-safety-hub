@@ -4,21 +4,18 @@
  *          Toast Notifications, Aegis AI Chat, Community Stats
  *
  * BACKEND URL: Update BACKEND_URL below to your Render URL.
- * This is the only place you need to change it.
+ * This is the ONLY value you need to change. No credentials here.
  */
-
 'use strict';
 
 /* ============================================================
-   CONFIG — change these if your URLs change
+   CONFIG — ONE value to change when you deploy
+   ============================================================
+   BACKEND_URL is not a secret — it is just a public address.
+   Supabase keys never appear here. They live in .env on Render.
+   Browser → FastAPI (Render) → Supabase
    ============================================================ */
 window.BACKEND_URL = 'https://digital-safety-hub.onrender.com';
-
-// Supabase config — filled from your .env equivalents
-// These are the PUBLIC anon keys (safe to expose in frontend)
-window.SUPABASE_URL = 'https://mctvxykemmmpqofocvoy.supabase.co';  // e.g. https://abcdef.supabase.co
-window.SUPABASE_ANON_KEY = 'sb_publishable_b6NR63xNYzyXO-nGbhpaaQ_LCi7ZMee'; // your supabase anon/public key
-
 
 /* ============================================================
    NAVIGATION — SPA View Switcher
@@ -28,19 +25,16 @@ window.showView = function (viewId) {
   document.querySelectorAll('.view').forEach(v => {
     v.classList.remove('active');
   });
-
   // Show target
   const target = document.getElementById('view-' + viewId);
   if (target) {
     target.classList.add('active');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
-
   // Update nav link active states
   document.querySelectorAll('.nav-link').forEach(link => {
     link.classList.toggle('active', link.getAttribute('data-view') === viewId);
   });
-
   // Trigger view-specific init
   const viewInits = {
     scams:    () => { if (window.initScams)    window.initScams(); },
@@ -49,10 +43,8 @@ window.showView = function (viewId) {
     quiz:     () => { /* quiz inits on start button */ },
     home:     () => { loadCommunityStats(); }
   };
-
   if (viewInits[viewId]) viewInits[viewId]();
 };
-
 
 /* ============================================================
    THEME TOGGLE
@@ -62,12 +54,8 @@ const THEME_KEY = 'dsh_theme';
 function applyTheme(theme) {
   document.documentElement.setAttribute('data-theme', theme);
   localStorage.setItem(THEME_KEY, theme);
-
-  // Sync toggle checkbox
   const checkbox = document.getElementById('theme-checkbox');
   if (checkbox) checkbox.checked = (theme === 'dark');
-
-  // Notify visuals.js to update Three.js particle color
   window.dispatchEvent(new CustomEvent('themechange', { detail: { theme } }));
 }
 
@@ -77,18 +65,15 @@ function initTheme() {
   applyTheme(saved || preferred);
 }
 
-// Toggle handler
 document.addEventListener('DOMContentLoaded', () => {
   const checkbox = document.getElementById('theme-checkbox');
   if (checkbox) {
     checkbox.addEventListener('change', () => {
-      const newTheme = checkbox.checked ? 'dark' : 'light';
-      applyTheme(newTheme);
+      applyTheme(checkbox.checked ? 'dark' : 'light');
     });
   }
   initTheme();
 });
-
 
 /* ============================================================
    HAMBURGER MENU
@@ -103,15 +88,12 @@ window.closeDrawer = function () {
 document.addEventListener('DOMContentLoaded', () => {
   const btn    = document.getElementById('hamburger-btn');
   const drawer = document.getElementById('nav-drawer');
-
   if (btn && drawer) {
     btn.addEventListener('click', () => {
       const isOpen = drawer.classList.toggle('open');
       btn.setAttribute('aria-expanded', String(isOpen));
     });
   }
-
-  // Close drawer on outside click
   document.addEventListener('click', (e) => {
     if (drawer && drawer.classList.contains('open')) {
       if (!drawer.contains(e.target) && !btn.contains(e.target)) {
@@ -120,7 +102,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 });
-
 
 /* ============================================================
    MODAL HELPERS
@@ -141,7 +122,6 @@ window.closeModal = function (id) {
   }
 };
 
-// Close modal on backdrop click
 document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.modal-backdrop').forEach(backdrop => {
     backdrop.addEventListener('click', (e) => {
@@ -150,7 +130,6 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-// Close on Escape key
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') {
     document.querySelectorAll('.modal-backdrop.open').forEach(m => {
@@ -163,24 +142,18 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
-
 /* ============================================================
    TOAST NOTIFICATIONS
    ============================================================ */
 window.showToast = function (message, duration = 3000) {
   const container = document.getElementById('toast-container');
   if (!container) return;
-
   const toast = document.createElement('div');
   toast.className = 'toast';
   toast.textContent = message;
   container.appendChild(toast);
-
-  setTimeout(() => {
-    toast.remove();
-  }, duration);
+  setTimeout(() => toast.remove(), duration);
 };
-
 
 /* ============================================================
    DECISION TREE — "Is this a scam?" FAB
@@ -252,7 +225,6 @@ function renderDecisionStep(stepId) {
   const container = document.getElementById('decision-tree-content');
   if (!container || !step) return;
 
-  // Verdict screen
   if (step.verdict) {
     const isScam = step.verdict === 'scam';
     container.innerHTML = `
@@ -272,16 +244,11 @@ function renderDecisionStep(stepId) {
     return;
   }
 
-  // Question screen
   container.innerHTML = `
     <p style="font-size:var(--text-md);font-weight:600;color:var(--text-primary);margin-bottom:var(--space-5);line-height:1.5;">${step.q}</p>
     <div style="display:flex;flex-direction:column;gap:var(--space-3);">
-      <button class="btn btn-danger btn-full" onclick="renderDecisionStep('${step.yes}')">
-        Yes
-      </button>
-      <button class="btn btn-glass btn-full" onclick="renderDecisionStep('${step.no}')">
-        No
-      </button>
+      <button class="btn btn-danger btn-full" onclick="renderDecisionStep('${step.yes}')">Yes</button>
+      <button class="btn btn-glass btn-full"  onclick="renderDecisionStep('${step.no}')">No</button>
     </div>
     <button class="btn btn-glass btn-sm" style="margin-top:var(--space-4);" onclick="renderDecisionStep('start')">
       ← Start over
@@ -289,16 +256,15 @@ function renderDecisionStep(stepId) {
   `;
 }
 
-
 /* ============================================================
    AEGIS AI CHAT
+   All calls go to your FastAPI backend — never to Gemini directly.
+   Backend reads the Gemini API key from .env safely.
    ============================================================ */
 window.toggleAegis = function () {
   const chat = document.getElementById('aegis-chat');
   if (!chat) return;
   const isHidden = chat.classList.toggle('hidden');
-
-  // Add greeting on first open
   if (!isHidden) {
     const history = document.getElementById('chat-history');
     if (history && history.children.length === 0) {
@@ -324,27 +290,24 @@ window.sendAegisMessage = async function () {
   const query = input.value.trim();
   if (!query) return;
 
-  // User bubble
   appendUserMsg(query);
   input.value = '';
   history.scrollTop = history.scrollHeight;
 
-  // Thinking bubble
-  const thinkingId = 'thinking-' + Date.now();
   const thinkDiv = document.createElement('div');
-  thinkDiv.id = thinkingId;
   thinkDiv.className = 'chat-msg bot-msg';
   thinkDiv.textContent = '⏳ Consulting Aegis Fortress…';
   history.appendChild(thinkDiv);
   history.scrollTop = history.scrollHeight;
 
   try {
-    const response = await fetch(`${window.BACKEND_URL}/api/analyze?text=${encodeURIComponent(query)}`);
+    // ✅ Calls YOUR backend on Render — never touches Gemini or Supabase directly
+    const response = await fetch(
+      `${window.BACKEND_URL}/api/analyze?text=${encodeURIComponent(query)}`
+    );
     if (!response.ok) throw new Error(response.status === 429 ? '429' : 'offline');
-
     const data = await response.json();
     thinkDiv.textContent = data.reply || 'Analysis complete but no data returned.';
-
   } catch (err) {
     if (err.message === '429') {
       thinkDiv.textContent = '🛡️ Aegis is cooling down (API quota). Please wait 60 seconds.';
@@ -353,7 +316,6 @@ window.sendAegisMessage = async function () {
     }
     thinkDiv.style.color = 'var(--danger)';
   }
-
   history.scrollTop = history.scrollHeight;
 };
 
@@ -375,7 +337,6 @@ function appendBotMsg(text) {
   history.scrollTop = history.scrollHeight;
 }
 
-// Event listeners for Aegis input
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('send-ai-btn')?.addEventListener('click', window.sendAegisMessage);
   document.getElementById('ai-input')?.addEventListener('keypress', (e) => {
@@ -383,9 +344,11 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-
 /* ============================================================
-   COMMUNITY STATS — Loads from Supabase quiz_results table
+   COMMUNITY STATS
+   ✅ Calls /v1/quiz/stats on YOUR backend — no Supabase in browser.
+   Backend reads Supabase credentials from .env on Render.
+   Flow: Browser → GET /v1/quiz/stats → FastAPI → Supabase
    ============================================================ */
 async function loadCommunityStats() {
   const elTakers    = document.getElementById('stat-takers');
@@ -397,12 +360,12 @@ async function loadCommunityStats() {
   if (!elTakers) return;
 
   try {
-    // Call our backend proxy endpoint to get quiz stats
-    const res = await fetch(`${window.BACKEND_URL}/api/quiz-stats`);
+    // ✅ Your backend endpoint — defined in main.py as GET /v1/quiz/stats
+    const res = await fetch(`${window.BACKEND_URL}/v1/quiz/stats`);
     if (!res.ok) throw new Error('Stats unavailable');
     const data = await res.json();
 
-    if (!data || data.count === 0) {
+    if (!data || data.total_takers === 0) {
       if (elFallback) elFallback.style.display = 'block';
       if (elChart)    elChart.style.display = 'none';
       return;
@@ -410,12 +373,15 @@ async function loadCommunityStats() {
 
     if (elFallback) elFallback.style.display = 'none';
 
-    // Animate numbers counting up
-    animateCount(elTakers,    0, data.count, 1200);
-    animateCount(elAvg,       0, data.avg_score, 1000, true);
-    animateCount(elGuardians, 0, data.guardian_count, 1200);
+    // Guardian count = people who scored 8+ (derived from distribution)
+    const guardianCount = Object.entries(data.distribution || {})
+      .filter(([score]) => parseInt(score) >= 8)
+      .reduce((sum, [, count]) => sum + count, 0);
 
-    // Distribution bar chart with ApexCharts
+    animateCount(elTakers,    0, data.total_takers, 1200);
+    animateCount(elAvg,       0, data.avg_score,    1000, true);
+    animateCount(elGuardians, 0, guardianCount,      1200);
+
     if (elChart && typeof ApexCharts !== 'undefined' && data.distribution) {
       elChart.style.display = 'block';
       renderStatsChart(elChart, data.distribution);
@@ -435,22 +401,27 @@ function animateCount(el, from, to, duration, isDecimal = false) {
   const start = performance.now();
   function step(ts) {
     const progress = Math.min((ts - start) / duration, 1);
-    const eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
-    const val = from + (to - from) * eased;
-    el.textContent = isDecimal ? val.toFixed(1) : Math.round(val).toLocaleString('en-IN');
+    const eased    = 1 - Math.pow(1 - progress, 3);
+    const val      = from + (to - from) * eased;
+    el.textContent = isDecimal
+      ? val.toFixed(1)
+      : Math.round(val).toLocaleString('en-IN');
     if (progress < 1) requestAnimationFrame(step);
   }
   requestAnimationFrame(step);
 }
 
 function renderStatsChart(container, distribution) {
-  // distribution = { "0-3": 10, "4-6": 25, "7-8": 40, "9-10": 30 }
-  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-  const textColor = isDark ? '#B3B3B3' : '#374151';
-  const accentColor = isDark ? '#1DB954' : '#0D7A3E';
+  const isDark      = document.documentElement.getAttribute('data-theme') === 'dark';
+  const textColor   = isDark ? '#B3B3B3' : '#374151';
+  const accentColor = isDark ? '#1DB954'  : '#0D7A3E';
 
-  const labels = Object.keys(distribution);
-  const values = Object.values(distribution);
+  // distribution from backend: { "0": 2, "5": 10, "8": 34, ... }
+  // Sort keys numerically for correct chart order
+  const sorted = Object.entries(distribution)
+    .sort(([a], [b]) => parseInt(a) - parseInt(b));
+  const labels = sorted.map(([k]) => `Score ${k}`);
+  const values = sorted.map(([, v]) => v);
 
   const chart = new ApexCharts(container, {
     chart: {
@@ -462,7 +433,7 @@ function renderStatsChart(container, distribution) {
     },
     series: [{ name: 'People', data: values }],
     xaxis: {
-      categories: labels.map(l => `Score ${l}`),
+      categories: labels,
       labels: { style: { colors: textColor, fontSize: '11px' } }
     },
     yaxis: { labels: { style: { colors: textColor } } },
@@ -475,10 +446,8 @@ function renderStatsChart(container, distribution) {
     },
     plotOptions: { bar: { borderRadius: 6 } }
   });
-
   chart.render();
 
-  // Re-render if theme changes
   window.addEventListener('themechange', ({ detail }) => {
     const d = detail.theme === 'dark';
     chart.updateOptions({
@@ -491,15 +460,12 @@ function renderStatsChart(container, distribution) {
   });
 }
 
-
 /* ============================================================
    APP INIT
    ============================================================ */
 document.addEventListener('DOMContentLoaded', () => {
-  // Show home view and load stats
   showView('home');
   loadCommunityStats();
-
   console.log('%c🛡️ Digital Safety Hub v1.0', 'color:#1DB954;font-weight:bold;font-size:14px;');
   console.log('%cBuilt for India. Protecting against digital fraud.', 'color:#888;font-size:12px;');
 });
