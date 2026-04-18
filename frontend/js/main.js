@@ -4,7 +4,7 @@
  */
 
 let appData = {};
-const BACKEND_URL = "https://your-render-app-name.onrender.com"; 
+const BACKEND_URL = "https://digital-safety-hub.onrender.com"; 
 
 // --- 1. INITIALIZATION & LOCALIZATION ---
 async function initApp() {
