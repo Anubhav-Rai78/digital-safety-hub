@@ -303,7 +303,16 @@
 </div>
 
 <script type="module" src="js/app.js"></script>
-<script type="module" src="js/visuals.js"></script>
+<script type="module">
+  try {
+    import('./js/visuals.js').then(module => {
+      // Assuming visuals.js automatically initializes when imported
+      console.log("3D Visuals initialized.");
+    });
+  } catch (e) {
+    console.warn("WebGL not supported or disabled. Running in fallback mode.", e);
+  }
+</script>
 
 </body>
 </html>
