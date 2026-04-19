@@ -5,37 +5,50 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Digital Safety Hub — India's Scam Protection Platform</title>
   <meta name="description" content="Identify scams, verify suspicious links, report cybercrime. India's free digital safety platform." />
-
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
-
+  <!-- ApexCharts — loaded before app.js so it's available as global -->
   <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
   <link rel="stylesheet" href="css/style.css" />
-  <link rel="icon" type="image/png" href="assets/aegis/favicon.png">
+  <link rel="icon" type="image/png" href="assets/aegis/favicon.png" />
 </head>
 <body>
 
+<!-- ============================================================
+     GRADIENT ORB DEPTH LAYER
+     ============================================================ -->
 <div class="orb-layer" aria-hidden="true"></div>
 
+<!-- ============================================================
+     THREE.JS CANVAS BACKGROUND
+     ============================================================ -->
 <div id="canvas-container" aria-hidden="true">
   <canvas id="three-canvas"></canvas>
 </div>
 
+<!-- ============================================================
+     EMERGENCY STRIP
+     ============================================================ -->
 <div class="emergency-strip" role="banner">
   <span class="pulse-dot" aria-hidden="true"></span>
   <span>📞 Got scammed?</span>
-  <a href="tel:1930" aria-label="Call 1930 National Cybercrime Helpline">Call <strong>1930</strong> — National Cybercrime Helpline — Free, 24/7</a>
+  <a href="tel:1930" aria-label="Call 1930 National Cybercrime Helpline">
+    Call <strong>1930</strong> — National Cybercrime Helpline — Free, 24/7
+  </a>
 </div>
 
+<!-- ============================================================
+     NAVIGATION
+     ============================================================ -->
 <nav class="nav" role="navigation" aria-label="Main navigation">
   <div class="nav-inner">
-
-    <a class="nav-logo" data-view="home" role="button" tabindex="0" aria-label="Digital Safety Hub home" style="cursor: pointer;">
+    <!-- Logo -->
+    <a class="nav-logo" data-view="home" role="button" tabindex="0" aria-label="Digital Safety Hub home">
       <div class="nav-logo-icon" aria-hidden="true">🛡️</div>
       <span class="nav-logo-text">Digital Safety Hub</span>
     </a>
-
+    <!-- Desktop links -->
     <ul class="nav-links" role="list">
       <li><button class="nav-link active" data-view="home">Home</button></li>
       <li><button class="nav-link" data-view="scams">Scam Encyclopedia</button></li>
@@ -44,17 +57,13 @@
       <li><button class="nav-link" data-view="report">Report</button></li>
       <li><button class="nav-link" data-view="quiz">Quiz</button></li>
     </ul>
-
+    <!-- Controls -->
     <div class="nav-right">
       <label class="theme-toggle" aria-label="Toggle light/dark theme" title="Toggle theme">
         <input type="checkbox" id="theme-checkbox" />
-        <div class="toggle-track">
-          <span>☀️</span>
-          <span>🌙</span>
-        </div>
+        <div class="toggle-track"><span>☀️</span><span>🌙</span></div>
         <div class="toggle-thumb"></div>
       </label>
-
       <button class="nav-hamburger" id="hamburger-btn" aria-label="Open menu" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
@@ -62,17 +71,24 @@
   </div>
 </nav>
 
+<!-- Mobile drawer -->
 <div class="nav-drawer" id="nav-drawer" role="menu">
-  <button class="nav-link" data-view="home" role="menuitem">🏠 Home</button>
-  <button class="nav-link" data-view="scams" role="menuitem">📚 Scam Encyclopedia</button>
+  <button class="nav-link" data-view="home"     role="menuitem">🏠 Home</button>
+  <button class="nav-link" data-view="scams"    role="menuitem">📚 Scam Encyclopedia</button>
   <button class="nav-link" data-view="simulate" role="menuitem">🎮 Simulator</button>
-  <button class="nav-link" data-view="verify" role="menuitem">🔍 Verify</button>
-  <button class="nav-link" data-view="report" role="menuitem">🆘 Report</button>
-  <button class="nav-link" data-view="quiz" role="menuitem">🧠 Quiz</button>
+  <button class="nav-link" data-view="verify"   role="menuitem">🔍 Verify</button>
+  <button class="nav-link" data-view="report"   role="menuitem">🆘 Report</button>
+  <button class="nav-link" data-view="quiz"     role="menuitem">🧠 Quiz</button>
 </div>
 
+<!-- ============================================================
+     MAIN CONTENT
+     ============================================================ -->
 <main id="app-shell" role="main">
 
+  <!-- ======================================================
+       HOME
+       ====================================================== -->
   <section id="view-home" class="view active">
     <div class="hero">
       <div class="container">
@@ -87,28 +103,33 @@
         </p>
         <div class="hero-ctas">
           <button class="btn btn-primary btn-lg" data-cta="quiz">🧠 Test My Awareness</button>
-          <button class="btn btn-danger btn-lg" data-cta="scam-check">⚠️ I Think I'm Being Scammed</button>
+          <button class="btn btn-danger btn-lg"  data-cta="scam-check">⚠️ I Think I'm Being Scammed</button>
         </div>
-
         <div class="glass truth-ticker" style="padding:var(--space-5) var(--space-8);">
           <div class="ticker-stat">
             <span class="ticker-value danger">₹22,495 Cr</span>
-            <span class="ticker-label">Lost in 2025</span>
+            <span class="ticker-label">Lost to Cybercrime in 2025</span>
           </div>
           <div class="ticker-divider"></div>
           <div class="ticker-stat">
             <span class="ticker-value danger">76%</span>
-            <span class="ticker-label">Investment Scams</span>
+            <span class="ticker-label">Losses from Investment Scams</span>
           </div>
           <div class="ticker-divider"></div>
           <div class="ticker-stat">
             <span class="ticker-value">28.15 Lakh</span>
-            <span class="ticker-label">Cases Filed</span>
+            <span class="ticker-label">Cases Filed in 2025</span>
+          </div>
+          <div class="ticker-divider"></div>
+          <div class="ticker-stat">
+            <span class="ticker-value danger">47%</span>
+            <span class="ticker-label">Hit by AI Deepfake Scams</span>
           </div>
         </div>
       </div>
     </div>
 
+    <!-- Quick Tools -->
     <div class="container section-sm">
       <div class="section-header">
         <p class="section-tag">Quick Actions</p>
@@ -118,22 +139,27 @@
         <button class="quick-tool stagger-child" data-quick-tool="verify">
           <div class="quick-tool-icon">🔗</div>
           <div class="quick-tool-title">Check a Link</div>
+          <div class="quick-tool-desc">Is this URL safe to open?</div>
         </button>
         <button class="quick-tool stagger-child" data-quick-tool="verify">
           <div class="quick-tool-icon">📰</div>
           <div class="quick-tool-title">Verify News</div>
+          <div class="quick-tool-desc">Is this headline real or fake?</div>
         </button>
         <button class="quick-tool stagger-child" data-quick-tool="report">
           <div class="quick-tool-icon">🆘</div>
           <div class="quick-tool-title">Report a Scam</div>
+          <div class="quick-tool-desc">Step-by-step guide to report</div>
         </button>
         <button class="quick-tool stagger-child" data-quick-tool="quiz">
           <div class="quick-tool-icon">🧠</div>
           <div class="quick-tool-title">Take the Quiz</div>
+          <div class="quick-tool-desc">Test your scam awareness</div>
         </button>
       </div>
     </div>
 
+    <!-- Active Threats -->
     <div class="container section-sm">
       <div class="section-header flex justify-between items-center">
         <div>
@@ -145,6 +171,7 @@
       <div id="home-threat-cards" class="grid-3 stagger"></div>
     </div>
 
+    <!-- Community Stats -->
     <div class="container section-sm">
       <div class="section-header text-center">
         <p class="section-tag">Community Impact</p>
@@ -165,153 +192,350 @@
             <div class="stat-label">Guardians (8+/10)</div>
           </div>
         </div>
-        <div id="stats-chart" style="margin-top:var(--space-6);"></div>
-        <p id="stats-fallback" class="text-muted text-center" style="font-size:var(--text-sm);margin-top:var(--space-4);">Be the first to take the quiz!</p>
+        <div id="stats-chart" style="margin-top:var(--space-6); display:none;"></div>
+        <p id="stats-fallback" class="text-muted text-center" style="font-size:var(--text-sm);margin-top:var(--space-4);">
+          Be the first to take the quiz!
+        </p>
       </div>
     </div>
   </section>
 
+  <!-- ======================================================
+       SCAM ENCYCLOPEDIA
+       ====================================================== -->
   <section id="view-scams" class="view">
     <div class="container section">
-      <div class="section-header text-center">
+      <div class="section-header text-center" style="max-width:600px;margin:0 auto var(--space-8);">
         <p class="section-tag">📚 Know Every Scam</p>
         <h2 class="section-title">Scam Encyclopedia</h2>
+        <p class="section-desc">Every India-relevant scam explained. Expand any card to see red flags, real examples, and what to do.</p>
       </div>
       <div style="margin-bottom:var(--space-6);">
-        <input type="search" class="form-input" id="scam-search" placeholder="🔍 Search scams…" style="max-width:480px;" />
-        <div class="chip-group flex flex-wrap gap-2" id="scam-filters" style="margin-top:1rem;"></div>
+        <input
+          type="search"
+          class="form-input"
+          id="scam-search"
+          placeholder="🔍 Search scams, keywords, red flags…"
+          aria-label="Search scams"
+          style="max-width:480px; margin-bottom:var(--space-4);"
+        />
+        <div class="chip-group flex flex-wrap gap-2" id="scam-filters" role="group" aria-label="Filter by scam type"></div>
       </div>
-      <div id="scam-cards" class="grid-2"></div>
+      <div id="scam-cards" class="grid-2" style="gap:var(--space-5);"></div>
+      <p id="scam-no-results" class="hidden text-muted text-center" style="margin-top:var(--space-8);font-size:var(--text-md);">
+        No scams found. Try different keywords.
+      </p>
     </div>
   </section>
 
+  <!-- ======================================================
+       SIMULATOR
+       ====================================================== -->
   <section id="view-simulate" class="view">
     <div class="container section">
-      <div class="section-header text-center">
+      <div class="section-header text-center" style="max-width:600px;margin:0 auto var(--space-8);">
         <p class="section-tag">🎮 Practice Mode</p>
-        <h2 class="section-title">Scenario Simulator</h2>
+        <h2 class="section-title">Scam Scenario Simulator</h2>
+        <p class="section-desc">Experience real scam attempts safely. Make choices, see consequences — before it happens for real.</p>
       </div>
-      <div id="scenario-picker"><div class="grid-3 stagger" id="scenario-cards"></div></div>
+      <!-- Scenario picker -->
+      <div id="scenario-picker">
+        <div class="grid-3 stagger" id="scenario-cards"></div>
+      </div>
+      <!-- Active scenario -->
       <div id="scenario-active" class="hidden" style="max-width:620px;margin:0 auto;">
+        <div class="flex justify-between items-center" style="margin-bottom:var(--space-4);">
+          <div>
+            <div id="sim-title" class="font-display font-bold" style="font-size:var(--text-md);color:var(--text-primary);"></div>
+            <div id="sim-progress" class="text-muted" style="font-size:var(--text-xs);margin-top:4px;"></div>
+          </div>
+          <!-- FIX: This button is now wired via event delegation in app.js
+               wireSimulator() — no separate inline script needed -->
+          <button class="btn btn-glass btn-sm" id="sim-back-picker-btn">← Back</button>
+        </div>
         <div class="chat-window">
-          <div class="whatsapp-header"><div class="wa-name" id="sim-caller-name">Unknown</div></div>
+          <div class="whatsapp-header">
+            <div style="width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;font-size:1.2rem;">👤</div>
+            <div>
+              <div class="wa-name" id="sim-caller-name">Unknown</div>
+              <div class="wa-status" id="sim-caller-status">Online</div>
+            </div>
+          </div>
           <div class="chat-messages" id="sim-messages"></div>
           <div class="chat-choices" id="sim-choices"></div>
           <div id="sim-consequence" style="display:none;"></div>
         </div>
+        <div id="sim-end" class="hidden" style="margin-top:var(--space-6);"></div>
       </div>
     </div>
   </section>
 
+  <!-- ======================================================
+       VERIFY TOOLS
+       ====================================================== -->
   <section id="view-verify" class="view">
     <div class="container section">
-      <div class="section-header text-center">
-        <p class="section-tag">🔍 Verify Hub</p>
-        <h2 class="section-title">Safety Check Tools</h2>
+      <div class="section-header text-center" style="max-width:600px;margin:0 auto var(--space-8);">
+        <p class="section-tag">🔍 Verify Before You Trust</p>
+        <h2 class="section-title">Verify Tools Hub</h2>
+        <p class="section-desc">Paste anything suspicious. We'll open the right free tool for you — no account required.</p>
       </div>
-      <div style="max-width:680px;margin:0 auto; display:flex; flex-direction:column; gap:2rem;">
+      <div style="display:flex;flex-direction:column;gap:var(--space-6);max-width:680px;margin:0 auto;">
+        <!-- Link checker -->
         <div class="glass-card">
-          <h3>🔗 Link Checker</h3>
-          <input type="url" class="form-input" id="verify-url-input" placeholder="Paste link here…" />
-          <div style="margin-top:1rem; display:flex; gap:0.5rem;">
+          <div class="flex items-center gap-3" style="margin-bottom:var(--space-4);">
+            <div style="font-size:1.8rem;">🔗</div>
+            <div>
+              <h3 style="font-size:var(--text-lg);">Link / URL Checker</h3>
+              <p style="font-size:var(--text-sm);margin:0;">Paste a suspicious link to check if it's safe.</p>
+            </div>
+          </div>
+          <input type="url" class="form-input" id="verify-url-input" placeholder="Paste suspicious URL here…" />
+          <div style="display:flex;flex-wrap:wrap;gap:var(--space-3);margin-top:var(--space-4);">
             <button class="btn btn-glass" data-verify-tool="virustotal">🔬 VirusTotal</button>
             <button class="btn btn-glass" data-verify-tool="urlscan">🔭 URLScan.io</button>
+            <button class="btn btn-glass" data-verify-tool="safebrowsing">🛡️ Google Safe Browsing</button>
+          </div>
+          <div class="alert alert-info" style="margin-top:var(--space-4);">
+            <span>ℹ️</span>
+            <span><strong>How to read results:</strong> 0 detections = likely safe. 1–3 = caution. 4+ = do not open.</span>
           </div>
         </div>
+        <!-- News verifier -->
         <div class="glass-card">
-          <h3>📰 News Verifier</h3>
-          <input type="text" class="form-input" id="verify-news-input" placeholder="Paste headline…" />
-          <div style="margin-top:1rem; display:flex; gap:0.5rem;">
+          <div class="flex items-center gap-3" style="margin-bottom:var(--space-4);">
+            <div style="font-size:1.8rem;">📰</div>
+            <div>
+              <h3 style="font-size:var(--text-lg);">News / Headline Verifier</h3>
+              <p style="font-size:var(--text-sm);margin:0;">Paste a headline or keywords to fact-check viral news.</p>
+            </div>
+          </div>
+          <input type="text" class="form-input" id="verify-news-input" placeholder="Paste headline or keywords…" />
+          <div style="display:flex;flex-wrap:wrap;gap:var(--space-3);margin-top:var(--space-4);">
             <button class="btn btn-glass" data-verify-tool="factcheck">🔎 Google Fact Check</button>
+            <button class="btn btn-glass" data-verify-tool="boomlive">📋 BoomLive</button>
+            <button class="btn btn-glass" data-verify-tool="altnews">📡 AltNews</button>
+          </div>
+        </div>
+        <!-- Phone/UPI lookup -->
+        <div class="glass-card">
+          <div class="flex items-center gap-3" style="margin-bottom:var(--space-4);">
+            <div style="font-size:1.8rem;">📞</div>
+            <div>
+              <h3 style="font-size:var(--text-lg);">Phone / UPI Lookup</h3>
+              <p style="font-size:var(--text-sm);margin:0;">Look up an unknown number or UPI ID before transacting.</p>
+            </div>
+          </div>
+          <input type="text" class="form-input" id="verify-phone-input" placeholder="Enter phone number or UPI ID…" />
+          <div style="display:flex;flex-wrap:wrap;gap:var(--space-3);margin-top:var(--space-4);">
+            <button class="btn btn-glass" data-verify-tool="truecaller">📲 Truecaller</button>
+            <button class="btn btn-glass" data-verify-tool="tafcop">🏛️ TAFCOP Portal</button>
+          </div>
+          <div class="alert alert-success" style="margin-top:var(--space-4);">
+            <span>✅</span>
+            <span>Truecaller shows spam reports. TAFCOP shows how many SIMs are linked to your Aadhaar.</span>
           </div>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- ======================================================
+       REPORT
+       ====================================================== -->
   <section id="view-report" class="view">
     <div class="container section">
+      <!-- Emergency Banner -->
+      <div class="alert alert-danger" style="margin-bottom:var(--space-8);justify-content:center;text-align:center;padding:var(--space-5);">
+        <span style="font-size:1.5rem;">📞</span>
+        <div>
+          <strong style="font-size:var(--text-lg);display:block;">1930 — National Cybercrime Helpline</strong>
+          <span style="font-size:var(--text-sm);">Available 24/7 · Free call · <a href="tel:1930" style="color:inherit;text-decoration:underline;">Tap to call now</a></span>
+        </div>
+      </div>
+      <div class="section-header text-center" style="max-width:600px;margin:0 auto var(--space-8);">
+        <p class="section-tag">🆘 Get Help Now</p>
+        <h2 class="section-title">Report & Emergency Guide</h2>
+        <p class="section-desc">Follow these steps to report a cybercrime. No tech expertise needed.</p>
+      </div>
       <div id="report-stepper" class="stepper" style="max-width:680px;margin:0 auto;"></div>
     </div>
   </section>
 
+  <!-- ======================================================
+       QUIZ
+       ====================================================== -->
   <section id="view-quiz" class="view">
     <div class="container section" style="max-width:680px;">
+      <!-- Entry screen -->
       <div id="quiz-entry">
-        <div class="glass-card text-center">
-          <input type="text" class="form-input" id="quiz-name-input" placeholder="Your name (optional)" />
-          <button class="btn btn-primary btn-full" id="quiz-start-btn" style="margin-top:1.5rem;">Start Quiz →</button>
+        <div class="section-header text-center" style="margin-bottom:var(--space-8);">
+          <p class="section-tag">🧠 Test Yourself</p>
+          <h2 class="section-title">Digital Safety Quiz</h2>
+          <p class="section-desc">10 India-specific scenarios. Find out if you're scam-proof.</p>
+        </div>
+        <div class="glass-card" style="max-width:480px;margin:0 auto;text-align:center;">
+          <div style="font-size:3rem;margin-bottom:var(--space-4);">🛡️</div>
+          <div class="form-group" style="margin-bottom:var(--space-5);">
+            <label class="form-label" for="quiz-name-input">Your name <span class="text-muted">(optional)</span></label>
+            <input type="text" class="form-input" id="quiz-name-input" placeholder="Enter your name…" maxlength="40" />
+          </div>
+          <p class="text-muted" style="font-size:var(--text-xs);margin-bottom:var(--space-5);line-height:1.6;">
+            💡 Only your score and name (if given) are saved to show community stats. No email required.
+          </p>
+          <button class="btn btn-primary btn-full" id="quiz-start-btn">Start Quiz →</button>
         </div>
       </div>
+      <!-- Quiz active -->
       <div id="quiz-active" class="hidden">
-        <div id="quiz-progress-label"></div>
-        <div class="progress-bar"><div class="progress-fill" id="quiz-progress-bar"></div></div>
-        <div class="glass-card"><p id="quiz-question-text"></p></div>
-        <div id="quiz-options-container"></div>
-        <button id="quiz-next-btn" class="btn btn-primary btn-full hidden">Next Question →</button>
+        <div class="flex justify-between items-center" style="margin-bottom:var(--space-4);">
+          <span id="quiz-progress-label" class="font-semibold" style="font-size:var(--text-sm);color:var(--text-secondary);"></span>
+          <div class="quiz-timer-ring" id="quiz-timer-ring" aria-label="Time remaining">
+            <svg viewBox="0 0 48 48" width="48" height="48">
+              <circle class="ring-track" cx="24" cy="24" r="20" />
+              <circle class="ring-fill" id="ring-fill-el" cx="24" cy="24" r="20" />
+            </svg>
+            <div id="quiz-timer-num" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:var(--text-xs);font-weight:700;color:var(--text-primary);"></div>
+          </div>
+        </div>
+        <div class="progress-bar" style="margin-bottom:var(--space-6);">
+          <div class="progress-fill" id="quiz-progress-bar" style="width:0%;"></div>
+        </div>
+        <div style="margin-bottom:var(--space-3);">
+          <span class="badge badge-info" id="quiz-category-badge"></span>
+        </div>
+        <div class="glass-card" style="margin-bottom:var(--space-5);">
+          <p id="quiz-question-text" style="font-size:var(--text-md);font-weight:600;color:var(--text-primary);line-height:1.5;"></p>
+        </div>
+        <div id="quiz-options-container" style="display:flex;flex-direction:column;gap:var(--space-3);"></div>
+        <div id="quiz-explanation-box" class="quiz-explanation"></div>
+        <button id="quiz-next-btn" class="btn btn-primary btn-full hidden" style="margin-top:var(--space-5);">
+          Next Question →
+        </button>
       </div>
-      <div id="quiz-result" class="hidden text-center">
-        <div id="quiz-score-display"></div>
-        <div id="quiz-result-chart"></div>
-        <button class="btn btn-primary" id="quiz-restart-btn">🔄 Retake</button>
-        <button class="btn btn-glass" id="quiz-share-btn">📤 Share</button>
+      <!-- Quiz result -->
+      <div id="quiz-result" class="hidden">
+        <div id="quiz-score-display" style="max-width:480px;margin:0 auto var(--space-8);"></div>
+        <div class="glass-card" style="max-width:480px;margin:0 auto;">
+          <h4 style="margin-bottom:var(--space-4);">📊 Community Score Distribution</h4>
+          <div id="quiz-result-chart"></div>
+          <p id="quiz-result-fallback" class="text-muted text-center" style="font-size:var(--text-sm);display:none;">
+            No community data yet. You're the first!
+          </p>
+        </div>
+        <div style="display:flex;gap:var(--space-4);justify-content:center;flex-wrap:wrap;margin-top:var(--space-6);">
+          <button class="btn btn-primary" id="quiz-restart-btn">🔄 Retake Quiz</button>
+          <button class="btn btn-glass"   id="quiz-share-btn">📤 Share My Result</button>
+          <a href="https://docs.google.com/forms/" target="_blank" rel="noopener" class="btn btn-glass">
+            📋 Contribute to Research ↗
+          </a>
+        </div>
       </div>
     </div>
   </section>
+
 </main>
 
-<div class="modal-backdrop" id="decision-modal">
+<!-- ============================================================
+     DECISION TREE MODAL
+     ============================================================ -->
+<div class="modal-backdrop" id="decision-modal" role="dialog" aria-modal="true" aria-labelledby="decision-modal-title">
   <div class="modal">
     <div class="modal-header">
-      <h2>🛡️ Is This a Scam?</h2>
-      <button class="modal-close" id="close-decision-modal">✕</button>
-    </div>
-    <div class="modal-body"><div id="decision-tree-content"></div></div>
-  </div>
-</div>
-
-<div class="modal-backdrop" id="report-modal">
-  <div class="modal">
-    <div class="modal-header">
-      <h2>📋 Report Scam</h2>
-      <button class="modal-close" data-close-modal="report-modal">✕</button>
+      <h2 class="modal-title" id="decision-modal-title">🛡️ Is This a Scam?</h2>
+      <button class="modal-close" id="close-decision-modal" aria-label="Close">✕</button>
     </div>
     <div class="modal-body">
-      <input type="text" class="form-input" id="report-scam-type" readonly />
-      <textarea class="form-textarea" id="report-description" placeholder="Description..."></textarea>
+      <div id="decision-tree-content"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     REPORT SCAM MODAL
+     ============================================================ -->
+<div class="modal-backdrop" id="report-modal" role="dialog" aria-modal="true" aria-labelledby="report-modal-title">
+  <div class="modal">
+    <div class="modal-header">
+      <h2 class="modal-title" id="report-modal-title">📋 Report Your Experience</h2>
+      <button class="modal-close" data-close-modal="report-modal" aria-label="Close">✕</button>
+    </div>
+    <div class="modal-body">
+      <p class="text-muted" style="font-size:var(--text-sm);margin-bottom:var(--space-5);">
+        Your anonymous report helps warn others. No personal data stored.
+      </p>
+      <div class="form-group" style="margin-bottom:var(--space-4);">
+        <label class="form-label">Scam Type</label>
+        <input type="text" class="form-input" id="report-scam-type" readonly />
+      </div>
+      <div class="form-group" style="margin-bottom:var(--space-5);">
+        <label class="form-label" for="report-description">
+          Briefly describe what happened <span class="text-muted">(optional)</span>
+        </label>
+        <textarea class="form-textarea" id="report-description" placeholder="e.g. Got a call claiming to be from SBI asking for OTP…"></textarea>
+      </div>
       <button class="btn btn-primary btn-full" id="submit-scam-report-btn">Submit Report</button>
+      <div id="report-modal-success" class="alert alert-success hidden" style="margin-top:var(--space-4);">
+        <span>✅</span> Thank you. Your report has been recorded.
+      </div>
     </div>
   </div>
 </div>
 
-<div class="toast-container" id="toast-container"></div>
+<!-- Toast container -->
+<div class="toast-container" id="toast-container" aria-live="polite"></div>
 
-<div id="aegis-container">
-  <div id="aegis-chat" class="hidden">
+<!-- ============================================================
+     FLOATING BUTTONS (FABs)
+     ============================================================ -->
+<div id="aegis-container" aria-label="Aegis AI assistant and scam check tools">
+  <!-- Aegis AI Chat panel -->
+  <div id="aegis-chat" class="hidden" role="complementary" aria-label="Aegis AI chat">
     <div class="aegis-chat-header">
-      <span>🤖 Aegis AI Guardian</span>
-      <button class="modal-close" id="close-aegis-btn" onclick="document.getElementById('aegis-eye').click()">✕</button>
+      <div>
+        <span class="title">🤖 Aegis AI Guardian</span>
+        <div style="font-size:var(--text-xs);color:var(--text-muted);margin-top:2px;">Paste any suspicious message</div>
+      </div>
+      <button class="modal-close" id="close-aegis-btn" aria-label="Close Aegis chat">✕</button>
     </div>
-    <div id="chat-history"></div>
+    <div id="chat-history" role="log" aria-label="Chat history" aria-live="polite"></div>
     <div class="aegis-input-area">
-      <input type="text" id="ai-input" placeholder="Ask anything..." />
-      <button class="btn btn-primary btn-sm" id="send-ai-btn">Send</button>
+      <input type="text" id="ai-input" placeholder="Paste suspicious message or ask anything…" aria-label="Ask Aegis" />
+      <button class="btn btn-primary btn-sm" id="send-ai-btn" aria-label="Send">Send</button>
     </div>
   </div>
-  <button class="fab-decision">🚨</button>
-  <div id="aegis-eye" role="button" tabindex="0">🤖</div>
+  <!-- FAB: Decision Tree -->
+  <div style="position:relative;">
+    <button class="fab-decision" aria-label="Quick scam check">🚨</button>
+    <span class="fab-tooltip">Is this a scam?</span>
+  </div>
+  <!-- FAB: Aegis AI -->
+  <div style="position:relative;">
+    <div id="aegis-eye" role="button" tabindex="0" aria-label="Open Aegis AI">🤖</div>
+    <span class="fab-tooltip">Ask Aegis AI</span>
+  </div>
 </div>
 
+<!-- ============================================================
+     SCRIPTS
+     Only TWO script tags now. The third (broken) inline script
+     that wired #sim-back-picker-btn has been REMOVED.
+     That button is now handled by wireSimulator() in app.js
+     using event delegation on #scenario-active.
+     ============================================================ -->
+
+<!-- app.js: main module entry point, wires everything -->
 <script type="module" src="js/app.js"></script>
+
+<!-- visuals.js: Three.js background, self-contained with WebGL fallback -->
 <script type="module">
-  try {
-    import('./js/visuals.js').then(module => {
-      // Assuming visuals.js automatically initializes when imported
-      console.log("3D Visuals initialized.");
-    });
-  } catch (e) {
-    console.warn("WebGL not supported or disabled. Running in fallback mode.", e);
-  }
+  (async () => {
+    try {
+      await import('./js/visuals.js');
+    } catch (e) {
+      console.warn('WebGL visuals not available:', e.message);
+    }
+  })();
 </script>
 
 </body>
